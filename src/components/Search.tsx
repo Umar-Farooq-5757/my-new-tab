@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 
-export const Search: React.FC = () => {
+const Search: React.FC = () => {
   const [query, setQuery] = useState("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -20,9 +20,8 @@ export const Search: React.FC = () => {
     <form
       action="https://www.google.com/search"
       method="GET"
-      target="_blank"
       onSubmit={handleSubmit}
-      className="bg-slate-950 text-white w-1/2 px-4 py-4 rounded-md flex items-center justify-between shadow-2xl">
+      className="flex items-center w-full max-w-xl mx-auto px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full shadow-lg transition-all">
       <input
         type="text"
         name="q"
@@ -32,11 +31,16 @@ export const Search: React.FC = () => {
         autoComplete="off"
         autoFocus
         required
-        className="grow outline-none"
+        className="flex-1 bg-transparent border-none outline-none text-white placeholder-white/60 px-2 text-base"
       />
-      <button type="submit" className="" aria-label="Search">
+      <button
+        type="submit"
+        className="p-2 text-white/80 hover:bg-gray-800 rounded-full transition-colors"
+        aria-label="Search">
         <IoIosSearch />
       </button>
     </form>
   );
 };
+
+export default Search;
