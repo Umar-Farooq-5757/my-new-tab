@@ -2,30 +2,54 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import Search from "./components/Search";
 import TimeAndDate from "./components/TimeAndDate";
+import Quote from "./components/Quote";
 
 function App() {
-  const [bgImage, setBgImage] = useState("");
+  const [bgImage, setBgImage] = useState(() => {
+    const cached = localStorage.getItem("nasa_apod");
+    const today = new Date().toISOString().split("T")[0];
+    if (cached) {
+      try {
+        const { date, url } = JSON.parse(cached);
+        if (date === today) return url;
+      } catch (e) {
+        // invalid cache
+      }
+    }
+    return "/background.jpg";
+  });
 
   useEffect(() => {
     const fetchImage = async () => {
       try {
         const apiKey = import.meta.env.VITE_API_KEY || "DEMO_KEY";
         const res = await fetch(
-          `https://api.nasa.gov/planetary/apod?api_key=${apiKey}`,
+          `https://api.nasa.gov/planetary/apod?api_key=${apiKey}`
         );
         if (!res.ok) {
           throw new Error(`HTTP error! Status: ${res.status}`);
         }
         const data = await res.json();
+        
         if (data.media_type === "image" && data.url) {
-          setBgImage(data.url);
+          const img = new Image();
+          img.src = data.url;
+          img.onload = () => {
+            setBgImage(data.url);
+            const today = new Date().toISOString().split("T")[0];
+            localStorage.setItem(
+              "nasa_apod",
+              JSON.stringify({ date: today, url: data.url })
+            );
+          };
         } else {
-          console.warn("NASA APOD today is not an image. Using fallback.");
+          console.warn("NASA APOD today is not an image.");
         }
       } catch (error) {
         console.error("Failed to fetch NASA image:", error);
       }
     };
+
     fetchImage();
   }, []);
 
@@ -33,15 +57,17 @@ function App() {
     <main
       className="relative flex items-center justify-center min-h-screen"
       style={{
-        backgroundImage: bgImage ? `url(${bgImage})` : `url(/background.jpg)`,
+        backgroundImage: `url(${bgImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
-      }}>
+      }}
+    >
       <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] z-0" />
       <div className="relative z-10 w-full flex flex-col items-center justify-center p-4 gap-6">
         <div className="text-white flex justify-between fixed top-4 left-4 right-4">
           <TimeAndDate />
+          <Quote/>
         </div>
         <Search />
       </div>
@@ -50,4 +76,3 @@ function App() {
 }
 
 export default App;
-
