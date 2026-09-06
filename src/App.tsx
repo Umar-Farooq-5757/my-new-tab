@@ -2,6 +2,7 @@ import "./App.css";
 import Search from "./components/Search";
 import TimeAndDate from "./components/TimeAndDate";
 import Quote from "./components/Quote";
+import Shortcuts from "./components/Shortcuts";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Quote/>
         </div>
         <Search />
+        <Shortcuts/>
       </div>
     </main>
   );

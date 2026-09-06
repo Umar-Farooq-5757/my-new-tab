@@ -15,9 +15,10 @@ const searchEngines: SearchEngine[] = [
 
 const Search: React.FC = () => {
   const [query, setQuery] = useState("");
-  const [engineIndex, setEngineIndex] = useState<number>(
-    JSON.parse(localStorage.getItem("currentEngine")) || 0,
-  );
+  const [engineIndex, setEngineIndex] = useState<number>(() => {
+    const saved = localStorage.getItem("currentEngine");
+    return saved ? JSON.parse(saved) : 0;
+  });
   const currentEngine = searchEngines[engineIndex];
 
   const changeSearchEngine = () => {

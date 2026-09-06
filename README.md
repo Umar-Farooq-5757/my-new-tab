@@ -9,6 +9,8 @@ A clean, responsive custom new tab browser page built for the Hack Club Stardanc
 - Glassmorphism applied to the elements.
 - Formatted date and time displayed at the top-left corner.
 - Quote of famous personalities in the top-right corner.
+- Multiple search engines available
+- Add, edit and delete shortcuts.
 
 ---
 
