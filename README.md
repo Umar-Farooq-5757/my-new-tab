@@ -11,6 +11,7 @@ A clean, responsive custom new tab browser page built for the Hack Club Stardanc
 - Quote of famous personalities in the top-right corner.
 - Multiple search engines available
 - Add, edit and delete shortcuts.
+- Added ambience mixer with many sounds for relaxation.
 
 ---
 
