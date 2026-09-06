@@ -46,7 +46,10 @@ const Quote: React.FC = () => {
         </>
       )}
       {!loading && (
-        <p className="text-white leading-8 wrap-break-word quote">"{quote}" - <span className="text-teal-500 font-semibold">{author}</span></p>
+        <p className="text-white leading-8 wrap-break-word quote">
+          "{quote}" {author && "-"}
+          <span className="text-teal-500 font-semibold">{author}</span>
+        </p>
       )}
     </div>
   );

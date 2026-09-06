@@ -16,3 +16,4 @@ A clean, responsive custom new tab browser page built for the Hack Club Stardanc
 - **Framework**: React,vite.
 - **Styling**: TailwindCSS.
 - **Deployment**: Vercel
+

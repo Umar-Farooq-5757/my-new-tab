@@ -1,63 +1,14 @@
-import { useEffect, useState } from "react";
 import "./App.css";
 import Search from "./components/Search";
 import TimeAndDate from "./components/TimeAndDate";
 import Quote from "./components/Quote";
 
 function App() {
-  const [bgImage, setBgImage] = useState(() => {
-    const cached = localStorage.getItem("nasa_apod");
-    const today = new Date().toISOString().split("T")[0];
-    if (cached) {
-      try {
-        const { date, url } = JSON.parse(cached);
-        if (date === today) return url;
-      } catch (e) {
-        // invalid cache
-      }
-    }
-    return "/background.jpg";
-  });
-
-  useEffect(() => {
-    const fetchImage = async () => {
-      try {
-        const apiKey = import.meta.env.VITE_API_KEY || "DEMO_KEY";
-        const res = await fetch(
-          `https://api.nasa.gov/planetary/apod?api_key=${apiKey}`
-        );
-        if (!res.ok) {
-          throw new Error(`HTTP error! Status: ${res.status}`);
-        }
-        const data = await res.json();
-        
-        if (data.media_type === "image" && data.url) {
-          const img = new Image();
-          img.src = data.url;
-          img.onload = () => {
-            setBgImage(data.url);
-            const today = new Date().toISOString().split("T")[0];
-            localStorage.setItem(
-              "nasa_apod",
-              JSON.stringify({ date: today, url: data.url })
-            );
-          };
-        } else {
-          console.warn("NASA APOD today is not an image.");
-        }
-      } catch (error) {
-        console.error("Failed to fetch NASA image:", error);
-      }
-    };
-
-    fetchImage();
-  }, []);
-
   return (
     <main
       className="relative flex items-center justify-center min-h-screen"
       style={{
-        backgroundImage: `url(${bgImage})`,
+        backgroundImage: `url(/background2.jpg)`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
